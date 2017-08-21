@@ -8,7 +8,7 @@ except RuntimeError:
 class Output:
     unlock_channel = 16
     lock_channel = 18
-    sensor_channel = 25
+    sensor_channel = 22
 
     def __init__(self):
         GPIO.setwarnings(False)
