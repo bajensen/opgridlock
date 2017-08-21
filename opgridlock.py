@@ -5,16 +5,15 @@ import ConfigParser
 
 # New instance with 'bar' and 'baz' defaulting to 'Life' and 'hard' each
 config = ConfigParser.SafeConfigParser({
-    'db_host': 'localhost',
-    'db_user': 'opgridlock',
-    'db_pass': 'secretpassword',
-    'db_port': 3306,
-    'db_name': 'opgridlock',
+    'device': 'COM4',
+    'host': 'localhost',
+    'user': 'opgridlock',
+    'pass': None,
+    'port': 3306,
+    'dbname': 'opgridlock',
 })
 
 config.read('config.ini')
-
-print config.get('Section1', 'foo')  # -> "Python is fun!"
 
 access_query = '''
 SELECT
@@ -59,13 +58,13 @@ INSERT INTO event (event_type, event_date, tag_id, details)
 VALUES (%s, NOW(), %s, %s)
 '''
 
-device = 'COM4'
+device = config.get('Reader', 'device')
 
 print 'Operation Gridlock v. 0.0.1!'
 
 ser = serial.Serial()
 ser.baudrate = 9600
-ser.port = 'COM4'
+ser.port = device
 
 print 'Connecting to RFID Reader at ' + device + '...'
 ser.open()
@@ -75,11 +74,11 @@ print 'Connected to RFID reader!'
 print 'Connecting to database...'
 
 connection = pymysql.connect(
-    host='localhost',
-    user='opgridlock',
-    password='ojeehbxvuue7teh8e',
-    port=3310,
-    db='door_access',
+    host=config.get('Database', 'host'),
+    user=config.get('Database', 'user'),
+    password=config.get('Database', 'pass'),
+    port=config.getint('Database', 'port'),
+    db=config.get('Database', 'dbname'),
     cursorclass=pymysql.cursors.DictCursor,
     charset='utf8mb4'
 )
