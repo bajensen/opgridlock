@@ -1,0 +1,26 @@
+import serial
+import re
+
+
+class Reader:
+    ser = None
+
+    def __init__(self, config):
+        device = config.get('Reader', 'device')
+
+        self.ser = serial.Serial()
+        self.ser.baudrate = 9600
+        self.ser.port = device
+
+        print 'Connecting to RFID Reader at ' + device + '...'
+
+        self.ser.open()
+
+        print 'Connected to RFID reader!'
+
+    def read(self):
+        code = self.ser.readline()
+        return re.sub(r'\W+', '', code)
+
+    def is_open(self):
+        return self.ser.is_open
