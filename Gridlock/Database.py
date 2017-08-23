@@ -31,7 +31,6 @@ class Database:
                 # Read a single record
                 cursor.execute(self.access_query, (code,))
                 result = cursor.fetchone()
-                print(result)
                 if result is not None and result['is_authorized']:
                     success = True
                     print 'Authorized!'
