@@ -43,7 +43,7 @@ while reader.is_open():
     # Reset lockout after fail_lockout seconds
     elif lockout_fail_count > lockout_max and lockout_tsp < time.time() - lockout_time:
         fail_start_timestamp = 0
-        fail_count = 0
+        lockout_fail_count = 0
         print "Cleared..."
 
     if lockout_fail_count < lockout_max:
