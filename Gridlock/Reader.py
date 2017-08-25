@@ -21,7 +21,6 @@ class Reader:
     def read(self):
         code = self.ser.readline()
         code = re.sub(r'\W+', '', code)
-        print code
         return code
 
     def is_open(self):
