@@ -8,11 +8,11 @@ class Database:
         print 'Connecting to database...'
 
         self.connection = pymysql.connect(
-            host=config.get('Database', 'host'),
-            user=config.get('Database', 'user'),
-            password=config.get('Database', 'pass'),
-            port=config.getint('Database', 'port'),
-            db=config.get('Database', 'dbname'),
+            host=config.get('Database', 'db_host'),
+            user=config.get('Database', 'db_user'),
+            password=config.get('Database', 'db_pass'),
+            port=config.getint('Database', 'db_port'),
+            db=config.get('Database', 'db_name'),
             cursorclass=pymysql.cursors.DictCursor,
             charset='utf8mb4'
         )
