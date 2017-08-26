@@ -11,7 +11,7 @@ Setup directories
 -----------------
 ```
 sudo addgroup --system opgridlock
-sudo adduser --system --home /opt/opgridlock/ opgridlock --ingroup opgridlock --ingroup dialout
+sudo adduser --system --home /opt/opgridlock/ opgridlock --ingroup opgridlock --ingroup dialout --ingroup gpio
 ```
 
 Clone git repository
