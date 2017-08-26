@@ -12,6 +12,8 @@ config = ConfigParser.SafeConfigParser({
     'pass': None,
     'port': 3306,
     'dbname': 'opgridlock',
+    'lockout_max': 5,
+    'lockout_time': 60,
 })
 
 config.read('config.ini')
