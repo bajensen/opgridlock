@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-from Gridlock import Config, ReaderSerial
+from Gridlock import Config, ReaderKeyboard
 
 
 def on_connect(client, user_data, flags, result_code):
@@ -24,7 +24,7 @@ mqtt_client.connect(
     config.getint("MQTT", "mqtt_keepalive")
 )
 
-reader = ReaderSerial(config)
+reader = ReaderKeyboard()
 
 mqtt_client.loop_start()
 

@@ -1,3 +1,4 @@
 from Database import Database
-from Reader import Reader
+from ReaderSerial import ReaderSerial
+from ReaderKeyboard import ReaderKeyboard
 from Config import Config

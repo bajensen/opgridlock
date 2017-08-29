@@ -2,7 +2,7 @@ import serial
 import re
 
 
-class Reader:
+class ReaderSerial:
     ser = None
 
     def __init__(self, config):
