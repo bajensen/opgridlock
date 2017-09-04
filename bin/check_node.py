@@ -25,6 +25,7 @@ class Check:
 
         # After 5 failed reads, lockout scanning for fail_lockout seconds
         if self.lockout_fail_count == self.lockout_max:
+            self.db.log_lockout(code, msg.topic)
             print "LOCKOUT!!!!"
         # Reset lockout after fail_lockout seconds
         elif self.lockout_fail_count > self.lockout_max and self.lockout_tsp < time.time() - self.lockout_time:
