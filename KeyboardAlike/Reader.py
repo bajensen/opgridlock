@@ -71,10 +71,8 @@ class Reader(object):
                         raise ReadException('Got %s bytes instead of %s - %s' % (len(data), self.data_size, str(data)))
                     else:
                         break
-                elif e.args[0] == 13:
+                elif e.args[0] == 19:
                     raise ReadException('Device disconnected!')
-
-                print e
 
         if self.debug:
             print('Raw data', data)
