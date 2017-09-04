@@ -47,7 +47,7 @@ class Database:
         return success
 
     def log_lockout(self, tag_code, topic):
-        self.log_scan(None, 'AUTH_LOCKOUT', 'System Locked Out! Tag Code = ' + tag_code + " Topic = " + topic)
+        self.log_scan(None, 'AUTH_LCKO', 'System Locked Out! Tag Code = ' + tag_code + " Topic = " + topic)
 
     access_query = '''
     SELECT
