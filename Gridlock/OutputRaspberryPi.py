@@ -3,8 +3,8 @@ import RPi.GPIO as GPIO
 
 
 class OutputRaspberryPi:
-    unlock_channel = 20
-    lock_channel = 21
+    unlock_channel = 37
+    lock_channel = 38
     sensor_channel = 22
 
     def __init__(self):
@@ -31,7 +31,7 @@ class OutputRaspberryPi:
 
     def lock(self):
         if GPIO is not None:
-            self.pulse_channel(self.unlock_channel)
+            self.pulse_channel(self.lock_channel)
         print 'Locking...'
 
     def is_open(self):
