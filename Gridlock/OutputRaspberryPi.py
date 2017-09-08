@@ -3,8 +3,8 @@ import RPi.GPIO as GPIO
 
 
 class OutputRaspberryPi:
-    unlock_channel = 16
-    lock_channel = 18
+    unlock_channel = 20
+    lock_channel = 21
     sensor_channel = 22
 
     def __init__(self):
@@ -16,10 +16,10 @@ class OutputRaspberryPi:
             GPIO.setmode(GPIO.BOARD)
 
             # Unlock Relay
-            GPIO.setup(self.unlock_channel, GPIO.OUT, initial=GPIO.LOW)
+            GPIO.setup(self.unlock_channel, GPIO.OUT, initial=GPIO.HIGH)
 
             # Lock Relay
-            GPIO.setup(self.lock_channel, GPIO.OUT, initial=GPIO.LOW)
+            GPIO.setup(self.lock_channel, GPIO.OUT, initial=GPIO.HIGH)
 
             # Door Sensor
             GPIO.setup(self.sensor_channel, GPIO.IN)
@@ -39,7 +39,7 @@ class OutputRaspberryPi:
             return GPIO.input(self.sensor_channel)
 
     def pulse_channel(self, channel, seconds=0.25):
-        GPIO.output(channel, True)
-        time.sleep(seconds)
         GPIO.output(channel, False)
+        time.sleep(seconds)
+        GPIO.output(channel, True)
 
