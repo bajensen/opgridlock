@@ -54,12 +54,7 @@ class Database:
       t.tag_id,
       t.tag_number,
       t.tag_code,
-      IF(
-          ta.holder_id IS NOT NULL AND
-          hta.holder_type_id IS NOT NULL AND
-          1=1
-          , 1, 0
-      ) AS is_authorized,
+      IF(ta.holder_id IS NOT NULL AND hta.holder_type_id IS NOT NULL, 1, 0) AS is_authorized,
       IF(ta.holder_id IS NOT NULL, 1, 0) AS has_holder,
       IF(hta.holder_type_id IS NOT NULL, 1, 0) AS has_access,
       ta.holder_id,
@@ -71,16 +66,16 @@ class Database:
       hta.start_time,
       hta.end_time
     FROM tag t
-    LEFT JOIN tag_assignment ta
-      ON t.tag_id = ta.tag_id AND (
+    LEFT JOIN tag_assignment ta ON 
+      t.tag_id = ta.tag_id AND (
         ta.end_date >= NOW() OR
         ta.end_date IS NULL
       ) AND
       ta.start_date <= NOW()
     LEFT JOIN holder h ON h.holder_id = ta.holder_id
     LEFT JOIN holder_type ht ON h.holder_type_id = ht.holder_type_id
-    LEFT JOIN holder_type_access hta
-      ON h.holder_type_id = hta.holder_type_id AND
+    LEFT JOIN holder_type_access hta ON 
+      h.holder_type_id = hta.holder_type_id AND
       hta.weekday IN ('ANY', DATE_FORMAT(NOW(), '%%a')) AND
       hta.start_time <= CURTIME() AND hta.end_time >= CURTIME()
     WHERE t.tag_code = %s
