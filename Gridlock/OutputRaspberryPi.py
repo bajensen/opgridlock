@@ -1,5 +1,7 @@
 import time
 import RPi.GPIO as GPIO
+import threading
+import time
 
 
 class OutputRaspberryPi:
@@ -7,6 +9,8 @@ class OutputRaspberryPi:
     lock_channel = 38
     sensor_channel = 22
     handler = None
+    thread = None
+    door_state = False
 
     def __init__(self):
         if GPIO is not None:
@@ -39,10 +43,21 @@ class OutputRaspberryPi:
         print 'Locking...'
 
     def handle_sensor(self, pin):
-        state = GPIO.input(self.sensor_channel)
+        # First Hit
+        if self.thread is None:
+            self.thread = threading.Thread(target=self.debounce_thread)
+            self.thread.daemon = True
+            self.thread.start()
+
+        self.door_state = GPIO.input(self.sensor_channel)
+
+    def debounce_thread(self):
+        time.sleep(0.5)
 
         if self.handler is not None:
-            self.handler(state)
+            self.handler(self.door_state)
+
+        self.thread = None
 
     def set_handler(self, handler):
         self.handler = handler
