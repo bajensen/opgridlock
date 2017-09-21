@@ -12,10 +12,10 @@ else:
     op = OutputRaspberryPi()
 
 
-def on_door_state(new_state):
-    print('Door changed state: ' + str(new_state))
+def on_door_state(door_open):
+    print('Door changed state: ' + str(door_open))
 
-    client.publish(config.get('MQTT', 'mqtt_door_state'), new_state, True)
+    client.publish(config.get('MQTT', 'mqtt_door_state'), door_open, 'open' if True else 'closed')
 
 
 def on_connect(client, user_data, flags, result_code):
