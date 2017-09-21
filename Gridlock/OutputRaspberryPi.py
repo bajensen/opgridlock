@@ -10,7 +10,7 @@ class OutputRaspberryPi:
     sensor_channel = 22
     handler = None
     thread = None
-    door_state = False
+    door_open = False
 
     def __init__(self):
         if GPIO is not None:
@@ -38,7 +38,7 @@ class OutputRaspberryPi:
         print 'Unlocking...'
 
     def lock(self):
-        if GPIO is not None:
+        if GPIO is not None and self.door_open is False:
             self.pulse_channel(self.lock_channel)
         print 'Locking...'
 
@@ -49,13 +49,13 @@ class OutputRaspberryPi:
             self.thread.daemon = True
             self.thread.start()
 
-        self.door_state = GPIO.input(self.sensor_channel)
+        self.door_open = GPIO.input(self.sensor_channel)
 
     def debounce_thread(self):
         time.sleep(0.1)
 
         if self.handler is not None:
-            self.handler(self.door_state)
+            self.handler(self.door_open)
 
         self.thread = None
 
