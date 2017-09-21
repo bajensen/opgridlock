@@ -52,7 +52,7 @@ class OutputRaspberryPi:
         self.door_state = GPIO.input(self.sensor_channel)
 
     def debounce_thread(self):
-        time.sleep(0.5)
+        time.sleep(0.1)
 
         if self.handler is not None:
             self.handler(self.door_state)
