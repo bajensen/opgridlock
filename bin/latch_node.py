@@ -15,7 +15,7 @@ else:
 def on_door_state(door_open):
     print('Door changed state: ' + str(door_open))
 
-    client.publish(config.get('MQTT', 'mqtt_door_state'), 'open' if door_open else 'closed', 0, True)
+    client.publish(config.get('MQTT', 'mqtt_door_state'), door_open, 0, True)
 
 
 def on_connect(client, user_data, flags, result_code):
