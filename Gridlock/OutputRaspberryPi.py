@@ -38,7 +38,7 @@ class OutputRaspberryPi:
         print 'Unlocking...'
 
     def lock(self):
-        if GPIO is not None and self.door_open is False:
+        if GPIO is not None:
             self.pulse_channel(self.lock_channel)
         print 'Locking...'
 
