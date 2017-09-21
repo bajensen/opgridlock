@@ -13,7 +13,7 @@ else:
 
 
 def on_door_state(new_state):
-    print('Door changed state: ' + new_state)
+    print('Door changed state: ' + str(new_state))
 
     client.publish(config.get('MQTT', 'mqtt_door_state'), new_state, True)
 
