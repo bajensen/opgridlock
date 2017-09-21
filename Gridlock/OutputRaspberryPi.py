@@ -23,7 +23,7 @@ class OutputRaspberryPi:
             GPIO.setup(self.lock_channel, GPIO.OUT, initial=GPIO.HIGH)
 
             # Door Sensor
-            GPIO.setup(self.sensor_channel, GPIO.IN)
+            GPIO.setup(self.sensor_channel, GPIO.IN, GPIO.PUD_UP)
 
             # Add an interrupt trigger
             GPIO.add_event_detect(self.sensor_channel, GPIO.BOTH, self.handle_sensor)
