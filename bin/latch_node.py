@@ -12,6 +12,12 @@ else:
     op = OutputRaspberryPi()
 
 
+def on_door_state(new_state):
+    print('Door changed state: ' + new_state)
+
+    client.publish(config.get('MQTT', 'mqtt_door_state'), new_state, True)
+
+
 def on_connect(client, user_data, flags, result_code):
     print('Connected to MQTT with result code: ' + str(result_code))
 
@@ -26,6 +32,9 @@ def on_message(client, user_data, msg):
         op.unlock()
 #         TODO: implement open/close status check
 
+
+# Set the handler
+op.set_handler(on_door_state)
 
 config = Config()
 

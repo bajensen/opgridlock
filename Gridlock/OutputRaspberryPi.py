@@ -6,6 +6,7 @@ class OutputRaspberryPi:
     unlock_channel = 37
     lock_channel = 38
     sensor_channel = 22
+    handler = None
 
     def __init__(self):
         if GPIO is not None:
@@ -24,6 +25,9 @@ class OutputRaspberryPi:
             # Door Sensor
             GPIO.setup(self.sensor_channel, GPIO.IN)
 
+            # Add an interrupt trigger
+            GPIO.add_event_detect(self.sensor_channel, GPIO.BOTH, self.handle_sensor)
+
     def unlock(self):
         if GPIO is not None:
             self.pulse_channel(self.unlock_channel)
@@ -33,6 +37,18 @@ class OutputRaspberryPi:
         if GPIO is not None:
             self.pulse_channel(self.lock_channel)
         print 'Locking...'
+
+    def handle_sensor(self, pin):
+        state = GPIO.input(self.sensor_channel)
+
+        if self.handler is not None:
+            self.handler(state)
+
+    def set_handler(self, handler):
+        self.handler = handler
+
+    def clear_handle(self):
+        self.handler = None
 
     def is_open(self):
         if GPIO is not None:
